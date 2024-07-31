@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var animationAmount = 1.0
     @State private var enable = false
+    @State private var dragAmount = CGSize.zero
     var body: some View {
         Button("Click here"){
             enable.toggle()
@@ -30,6 +31,21 @@ struct ContentView: View {
         .scaleEffect(animationAmount)
         .blur(radius: (animationAmount - 1) * 3)
         .animation(.default, value: animationAmount)
+        
+        LinearGradient(colors: [.yellow, .red], startPoint: .topLeading, endPoint: .bottomTrailing)
+            .frame(width: 300, height: 200)
+            .clipShape(.rect(cornerRadius: 10))
+            .offset(dragAmount)
+            .gesture(
+                DragGesture()
+                    .onChanged { dragAmount = $0.translation }
+                    .onEnded{_ in
+                        withAnimation(.bouncy){
+                            dragAmount = .zero
+                        }
+                    }
+            )
+            
     }
 }
 
