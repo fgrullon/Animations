@@ -17,6 +17,7 @@ struct ContentView: View {
         .frame(width: 200, height: 200)
         .background(enable ? .blue : .red)
         .foregroundColor(.white)
+        .clipShape(.rect(cornerRadius: enable ? 60 : 0))
         .animation(.default, value: enable)
         
         Button("Tap Me"){
